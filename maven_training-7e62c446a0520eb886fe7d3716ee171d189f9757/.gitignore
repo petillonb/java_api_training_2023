@@ -1,0 +1,9 @@
+# VSCode
+.vscode/
+
+# IDEA Community
+.idea/
+*.iml
+
+# Maven
+target/
