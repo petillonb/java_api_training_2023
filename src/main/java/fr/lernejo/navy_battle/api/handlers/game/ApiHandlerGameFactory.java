@@ -54,7 +54,6 @@ public class ApiHandlerGameFactory {
     }
 
     private static void HandlePost(HttpExchange exchange) throws IOException {
-        System.out.println("bonjour");
         String body = "toto";
         ResponseHandler.SendResponse(exchange, 202, body);
 
