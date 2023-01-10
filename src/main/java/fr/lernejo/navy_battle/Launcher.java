@@ -16,7 +16,7 @@ public class Launcher {
 
     public static void main(String[] args) {
 
-        int port = Integer.parseInt(args[1]);
+        int port = Integer.parseInt(args[0]);
         HttpServer server;
         String host = "localhost";
         try {
@@ -34,7 +34,7 @@ public class Launcher {
 
         System.out.println("Server is ready on: http://" + host + ":" + port);
         if (args.length > 1) {
-            String url = args[2];
+            String url = args[1];
             HTTPClientService clientService = new HTTPClientService(url);
             try {
                 clientService.post("api/start/game", "{\"id\":\"1\", \"url\":\"http://localhost:" + port + "\", \"message\":\"hello\"}");
