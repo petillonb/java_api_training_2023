@@ -8,7 +8,7 @@ import java.net.http.HttpResponse;
 
 public class HTTPClientService {
 
-    String adversaryUrl;
+    final private String adversaryUrl;
 
     public HTTPClientService(String adversaryUrl) {
         this.adversaryUrl = adversaryUrl;
