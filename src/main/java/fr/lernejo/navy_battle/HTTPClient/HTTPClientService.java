@@ -16,8 +16,9 @@ public class HTTPClientService {
     }
 
     public void post(String path, String body) throws IOException, InterruptedException {
+        URI uri = URI.create(adversaryUrl + path);
         HttpRequest requetePost = HttpRequest.newBuilder()
-            .uri(URI.create(adversaryUrl + path))
+            .uri(uri)
             .setHeader("Accept", "application/json")
             .setHeader("Content-Type", "application/json")
             .POST(HttpRequest.BodyPublishers.ofString(body))

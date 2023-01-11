@@ -24,16 +24,9 @@ public abstract class BodyValidator {
 
     private static boolean validateResult(Set<ValidationMessage> validationResult) {
         if (validationResult.isEmpty()) {
-
-            // show custom message if there is no validation error
-            System.out.println("There is no validation errors");
             return true;
-
         } else {
-
-            // show all the validation error
             validationResult.forEach(vm -> System.out.println(vm.getMessage()));
-
             return false;
         }
     }
