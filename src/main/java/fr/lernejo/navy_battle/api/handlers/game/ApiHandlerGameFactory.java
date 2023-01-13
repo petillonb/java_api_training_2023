@@ -5,6 +5,8 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import fr.lernejo.navy_battle.api.handlers.error.ErrorHandler;
+import fr.lernejo.navy_battle.api.handlers.game.logic.Board;
+import fr.lernejo.navy_battle.api.handlers.game.logic.Game;
 import fr.lernejo.navy_battle.api.handlers.game.validators.GameFireValidator;
 import fr.lernejo.navy_battle.api.handlers.game.validators.GameStartValidator;
 import fr.lernejo.navy_battle.api.handlers.utils.QueryParamsMapper;
@@ -32,7 +34,7 @@ public class ApiHandlerGameFactory {
 
     }
 
-    private static void matchHTTPVerbToHandler(HttpExchange exchange, int port) throws IOException {
+    private static void matchHTTPVerbToHandler(HttpExchange exchange, int port) throws Exception {
         String method = exchange.getRequestMethod();
         switch (method) {
             case "GET":
@@ -46,7 +48,7 @@ public class ApiHandlerGameFactory {
         }
     }
 
-    private static void handleGet(HttpExchange exchange) throws IOException {
+    private static void handleGet(HttpExchange exchange) throws Exception {
 
         String query = exchange.getRequestURI().getQuery();
         Map<String, String> queryParams = QueryParamsMapper.toMap(query);
@@ -55,7 +57,10 @@ public class ApiHandlerGameFactory {
             ErrorHandler.BadRequest(exchange, "Missing \"cell\" query param");
         }
 
-        String response = "{\"consequence\":\"sunk\", \"shipLeft\": true }";
+        Board board = Game.getBoard();
+        String consequences = board.recieveHit(cell);
+
+        String response = "{\"consequence\": \"" + consequences + "\", \"shipLeft\": true }";
         GameFireValidator validator = new GameFireValidator();
         boolean valid = validator.validate(response);
         if (!valid) {
@@ -73,6 +78,7 @@ public class ApiHandlerGameFactory {
             ErrorHandler.BadRequest(exchange, "json invalid or missing required properties");
         }
         System.out.println("Starting game with player");
+        Game.newGame();
         String response = "{\"id\":\"1\", \"url\":\"http://localhost:" + port + "\", \"message\":\"hello\"}";
         ResponseHandler.SendResponse(exchange, 202, response);
 
