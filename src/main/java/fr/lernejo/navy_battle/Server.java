@@ -49,6 +49,7 @@ public class Server {
         server.setExecutor(executor);
         server.createContext("/ping", ApiHandlerPingFactory.GetPingHandler());
         server.createContext("/api/game/start", ApiHandlerGameFactory.GetGameStartHandler(port));
+        server.createContext("/api/game/fire", ApiHandlerGameFactory.GetGameFireHandler(port));
         server.start();
         System.out.println("Server is ready on: http://" + host + ":" + port);
     }

@@ -36,10 +36,16 @@ public abstract class BodyValidator {
         JsonSchemaFactory schemaFactory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V202012);
         JsonSchema schema = schemaFactory.getSchema(new String(Files.readAllBytes(Paths.get(path))));
         Set<ValidationMessage> validationResult = schema.validate(objectMapper.readTree(body));
-
         return validateResult(validationResult);
-
-
     }
+
+    protected boolean _validate(String body) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonSchemaFactory schemaFactory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V202012);
+        JsonSchema schema = schemaFactory.getSchema(new String(Files.readAllBytes(Paths.get(path))));
+        Set<ValidationMessage> validationResult = schema.validate(objectMapper.readTree(body));
+        return validateResult(validationResult);
+    }
+
 
 }
