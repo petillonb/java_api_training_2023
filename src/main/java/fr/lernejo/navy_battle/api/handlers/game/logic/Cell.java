@@ -5,13 +5,13 @@ public class Cell {
     private final int x;
     private final int y;
     private final boolean occupied;
-    private boolean touched;
+    private final boolean[] touched;
 
     public Cell(int x, int y, boolean occupied) {
         this.x = x;
         this.y = y;
         this.occupied = occupied;
-        this.touched = false;
+        this.touched = new boolean[]{false};
     }
 
     public int getX() {
@@ -27,11 +27,11 @@ public class Cell {
     }
 
     public boolean isTouched() {
-        return touched;
+        return this.touched[0];
     }
 
     public boolean markedHit() {
-        this.touched = true;
+        this.touched[0] = true;
         return this.occupied;
     }
 }

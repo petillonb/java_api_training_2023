@@ -18,7 +18,6 @@ import java.util.Map;
 
 public class ApiHandlerGameFactory {
 
-    private int port;
 
     public static HttpHandler GetGameStartHandler(int port) {
 
@@ -60,6 +59,11 @@ public class ApiHandlerGameFactory {
         Board board = Game.getBoard();
         String consequences = board.recieveHit(cell);
 
+        String response = handleGetGame(exchange, cell, consequences);
+        ResponseHandler.SendResponse(exchange, 200, response);
+    }
+
+    private static String handleGetGame(HttpExchange exchange, String cell, String consequences) throws IOException {
         String response = "{\"consequence\": \"" + consequences + "\", \"shipLeft\": true }";
         GameFireValidator validator = new GameFireValidator();
         boolean valid = validator.validate(response);
@@ -67,7 +71,7 @@ public class ApiHandlerGameFactory {
             ErrorHandler.BadRequest(exchange, "Invalid response format");
         }
         System.out.println("Received fire on cell :" + cell);
-        ResponseHandler.SendResponse(exchange, 200, response);
+        return response;
     }
 
     private static void handlePost(HttpExchange exchange, int port) throws IOException {

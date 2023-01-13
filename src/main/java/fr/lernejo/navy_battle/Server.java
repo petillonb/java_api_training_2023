@@ -14,10 +14,17 @@ import java.util.concurrent.Executors;
 public class Server {
 
     final private int port;
-    private HttpServer server;
+    final private HttpServer server;
+    final private String host;
 
     public Server(int port) {
         this.port = port;
+        this.host = "localhost";
+        try {
+            this.server = HttpServer.create(new InetSocketAddress(host, port), 0);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public int getPort() {
@@ -37,13 +44,6 @@ public class Server {
 
     public void startServer() {
 
-
-        String host = "localhost";
-        try {
-            server = HttpServer.create(new InetSocketAddress(host, port), 0);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
 
         ExecutorService executor = Executors.newSingleThreadExecutor();
         server.setExecutor(executor);
