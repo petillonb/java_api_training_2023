@@ -60,6 +60,7 @@ public class ApiHandlerGameFactory {
 
         String response = BattleshipService.handleGetGame(exchange, cell, consequences);
         ResponseHandler.SendResponse(exchange, 200, response);
+
     }
 
 

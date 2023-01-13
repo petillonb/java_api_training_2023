@@ -34,4 +34,5 @@ public class Cell {
         this.touched[0] = true;
         return this.occupied;
     }
+
 }
